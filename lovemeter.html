@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Love Meter</title>
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style type="text/css">
+    body{
+        background-color: lightyellow
+    }
+    .button_center{
+        text-align: center;
+    }
+    .content{
+        background-color: beige;
+        padding-bottom: 10px;
+    }
+    .row{
+        margin-top: 10%;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class ="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4 content">
+              <center><h2>Love Meter</h2></center>
+              <form role="form" action="JavaScript:calculate()"> 
+                <div class="form-group">
+                  <label for="male">Your Name</label>
+                  <input type="text" class="form-control" id="male" placeholder="Enter Your Name" required>
+                </div>
+                <div class="form-group">
+                  <label for="female">Your Partner Name</label>
+                  <input type="text" class="form-control" id="female" placeholder="Enter Your Partner Name" required>
+                </div>
+                <div class="button_center">        
+                    <button type="submit" class="btn btn-default" >Calculate</button>
+                    <button id ="reset" type="button" class="btn btn-default" onclick="resetElement()">Reset</button>
+                </div>
+              </form>
+              <div class="button_center" id="prog_bar">
+                  <h3>Your Love Percentage </h3>
+                  <div class="progress">
+                    <div id = "progress_bar" class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                      <span id="progress_value"></span>
+                    </div>
+                  </div>
+              </div>
+            </div>
+        </div>      
+    </div>
+<script type="text/javascript">
+document.getElementById("prog_bar").style.display = "none";
+function calculate(){    
+    var count = 0;
+    var percent = 0;
+    var male = document.getElementById("male").value.toUpperCase();
+    var female = document.getElementById("female").value.toUpperCase();
+    for (var x = 0; x < male.length; x++)
+    {
+        for (var y = 0; y < female.length; y++){
+            if (male.charAt(x) == female.charAt(y)){
+                count++;
+            }
+        }
+    }
+    var value = Math.abs((male.length + female.length) - count);
+    if(value != 0){
+        var percent = Math.abs(Math.floor((Math.sin(value) * 10000) % 100));
+        if(percent < 20){
+            percent = percent + 20;
+        }        
+    }
+    document.getElementById("prog_bar").style.display = "initial";
+    document.getElementById("progress_bar").style.width = percent.toString()+"%";
+    document.getElementById("progress_value").innerHTML = percent.toString()+"%";   
+}
+function resetElement(){
+    document.getElementById("male").value = "";
+    document.getElementById("female").value = "";
+    document.getElementById("prog_bar").setAttribute("style", "display: none");
+}
+</script>    
+</body>
+</html>
